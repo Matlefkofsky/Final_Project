@@ -1,6 +1,7 @@
 #Frames per second manipulation
 
 #required 
+from random import randint
 import pygame
 pygame.init();
 
@@ -19,14 +20,16 @@ x_delta = 0
 y_delta = 0
 clock = pygame.time.Clock()
 
+hungryX = randint(20,750)
+hungryY = randint(20,550)
+#print (hungryX,hungryY)
+
 #create a surface
 gameDisplay = pygame.display.set_mode((800,600)) #initialize with a tuple
 
 #lets add a title, aka "caption"
 pygame.display.set_caption("This is my 206 Final Project")
 pygame.display.update()		#only updates portion specified
-
-
 
 
 gameExit = False
@@ -51,7 +54,8 @@ while not gameExit:
 	
 	x_pos +=x_delta
 	y_pos +=y_delta
-	gameDisplay.fill(Trump_Orange, rect=[x_pos,y_pos, 20,20])
+	gameDisplay.fill(Trump_Orange, rect=[x_pos,y_pos, 50,50]) #place orange dot and control size
+	gameDisplay.fill(blue, rect = [hungryX,hungryY,20,20]) #randomly place blue dot and controls size
 	pygame.display.update()		
 	clock.tick(30)
 
