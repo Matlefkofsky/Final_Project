@@ -10,6 +10,7 @@ black = (0,0,0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+Trump_Orange = (255, 165, 0)	
 
 #position vars
 x_pos = 0
@@ -22,7 +23,7 @@ clock = pygame.time.Clock()
 gameDisplay = pygame.display.set_mode((800,600)) #initialize with a tuple
 
 #lets add a title, aka "caption"
-pygame.display.set_caption("Frames per second")
+pygame.display.set_caption("This is my 206 Final Project")
 pygame.display.update()		#only updates portion specified
 
 
@@ -30,7 +31,7 @@ pygame.display.update()		#only updates portion specified
 
 gameExit = False
 while not gameExit:
-	gameDisplay.fill(white)
+	gameDisplay.fill(black)
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -46,11 +47,11 @@ while not gameExit:
 		if event.key == pygame.K_UP:
 			y_delta -= 10
 		if event.key == pygame.K_DOWN:
-			y_delta += 10
+			y_delta += 20
 	
 	x_pos +=x_delta
 	y_pos +=y_delta
-	gameDisplay.fill(blue, rect=[x_pos,y_pos, 20,20])
+	gameDisplay.fill(Trump_Orange, rect=[x_pos,y_pos, 20,20])
 	pygame.display.update()		
 	clock.tick(30)
 
