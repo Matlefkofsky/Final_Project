@@ -19,8 +19,8 @@ blue = (0, 0, 255)
 Trump_Orange = (255, 165, 0)	
 
 #position vars
-x_pos = 0
-y_pos = 0
+x = 0
+y = 0
 x_delta = 0
 y_delta = 0
 clock = pygame.time.Clock()
@@ -41,7 +41,6 @@ gameExit = False
 while not gameExit:
 	gameDisplay.fill(black)
 
-	#gameDisplay.Surface.blit(Trump,(100,100))
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -59,14 +58,15 @@ while not gameExit:
 		if event.key == pygame.K_DOWN:
 			y_delta += 1
 
-	if x_pos == hungryX: #When the X values are EXACTLY lined up this pushes the blue dot back to zero... can easily randomize a new HungryX
+	if x == hungryX: #When the X values are EXACTLY lined up this pushes the blue dot back to zero... can easily randomize a new HungryX
+		#gameDisplay.Surface.blit(Trump,(100,100))
 		hungryX = randint(20,750)
 		hungryY = randint(20,550) #HOW CAN WE GET THIS TO A RANGE THO SO IT DOESNT HAVE TO BE EXACT?
 
 
-	x_pos +=x_delta
-	y_pos +=y_delta
-	gameDisplay.fill(Trump_Orange, rect=[x_pos,y_pos, 20,20]) #place orange dot and control size
+	x +=x_delta
+	y +=y_delta
+	gameDisplay.fill(Trump_Orange, rect=[x,y, 20,20]) #place orange dot and control size
 	gameDisplay.fill(blue, rect = [hungryX,hungryY,20,20]) #randomly place blue dot and controls size
 	pygame.display.update()		
 	clock.tick(30)
