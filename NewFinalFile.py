@@ -4,21 +4,6 @@ import time
 from pygame.locals import*
 import os
 
-
-def load_png(name): #this was taken from pygame website on loading pngs
-	fullname = os.path.join('Media', name)
-	try:
-		image = pygame.image.load(fullname)
-		if image.get_alpha is None:
-			image = image.convert()
-		else:
-			image = image.convert_alpha()
-	except pygame.error as message:
-		print ('Cannot load image:' + fullname)
-		raise SystemExit
-	return image, image.get_rect() 
-
-# --- Globals ---
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -46,8 +31,10 @@ class Segment(pygame.sprite.Sprite):
         super().__init__()
  
         # Set height, width
-        self.image = pygame.Surface([width, height])
-        self.image.fill(Trump_Orange)
+        self.image = pygame.image.load('trump.bmp')
+        self.rect = self.image.get_rect()
+        #self.image = pygame.Surface([width, height])
+        #self.image.fill(Trump_Orange)
         #self.image.fill(load_png('trump.png'))
  
         # Make our top-left corner the passed-in location.
@@ -64,3 +51,42 @@ screen = pygame.display.set_mode([800, 600])
 # Set the title of the window
 pygame.display.set_caption('Trump Game')
  
+allspriteslist = pygame.sprite.Group()
+ 
+# Create an initial snake
+snake_segments = []
+for x in range(15):
+    x = 300 - (width + margin) * x
+    y = 40
+    segment = Segment(x, y)
+    snake_segments.append(segment)
+    allspriteslist.add(segment)
+ 
+ 
+clock = pygame.time.Clock()
+done = False
+ 
+while not done:
+ 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+
+        # Set the speed based on the key pressed
+        # We want the speed to be enough that we move a full
+        # segment, plus the margin.
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                x_change -= (width + margin)
+                y_change = 0
+            if event.key == pygame.K_RIGHT:
+                x_change += (width + margin)
+                y_change = 0
+            if event.key == pygame.K_UP:
+                x_change = 0
+                y_change -= (height + margin)
+            if event.key == pygame.K_DOWN:
+                x_change = 0
+                y_change += (height + margin)
+
+
