@@ -3,7 +3,7 @@ from random import randint
 import pygame
 import time
  
-class Food:
+class american:
     x = 0
     y = 0
     step = 47
@@ -16,7 +16,7 @@ class Food:
         surface.blit(image,(self.x, self.y)) 
  
  
-class Player:
+class Trump:
     x = [0]
     y = [0]
     step = 47
@@ -26,4 +26,13 @@ class Player:
     updateCountMax = 2
     updateCount = 0
  
+    def __init__(self, length):
+       self.length = length
+       for i in range(0,2000):
+           self.x.append(-100)
+           self.y.append(-100)
+ 
+       # initial positions, no collision.
+       self.x[1] = 1*47
+       self.x[2] = 2*47
  
