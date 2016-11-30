@@ -7,7 +7,7 @@ import random
 class Trump_Food(pygame.sprite.Sprite):
 	x = 0
 	y = 0
-	multiplier = 4
+	multiplier = 47
  
 	def __init__(self,x,y):
 		self.x = x * self.multiplier
@@ -20,7 +20,7 @@ class Trump_Food(pygame.sprite.Sprite):
 class Trump(pygame.sprite.Sprite):
 	x = [0]
 	y = [0]
-	multiplier = 4
+	multiplier = 47
 	direction = 0
 	length = 3
 	NewCountMax = 2
@@ -33,8 +33,8 @@ class Trump(pygame.sprite.Sprite):
 		   self.y.append(-100)
  
 	   # initial positions
-	   self.x[1] = 1*4
-	   self.x[2] = 2*4
+	   self.x[1] = 1*47
+	   self.x[2] = 2*47
  
 	def update(self):
  
@@ -81,4 +81,60 @@ class Game:
 			if y1 >= y2 and y1 <= y2 + bsize:
 				return True
 		return False
+ 
+class App(pygame.sprite.Sprite):
+ 
+	Width = 800
+	Height = 600
+	trump = 0
+	Trump_Food = 0
+ 
+	def __init__(self):
+		self._running = True
+		self._display_surf = None
+		self._image_surf = None
+		self._Trump_Food_surf = None
+		self.game = Game()
+		self.trump = Trump(3) 
+		self.Trump_Food = Trump_Food(5,5)
+ 
+	def Begin(self):
+		pygame.init()
+		self._display_surf = pygame.display.set_mode((self.Width,self.Height), pygame.HWSURFACE)
+ 
+		pygame.display.set_caption('Trump Game')
+		self._running = True
+		self._image_surf = pygame.image.load("trump.bmp").convert()
+
+		lst_of_pics = ["hillary3.bmp","mexico.bmp"]
+		random_pic = random.choice(lst_of_pics)
+		self._Trump_Food_surf = pygame.image.load(random_pic).convert()
+		# for i in range(0,self.trump.length):
+		# 	if self.game.Colliding(self.Trump_Food.x,self.Trump_Food.y,self.trump.x[i], self.trump.y[i],40):
+		# 		self._Trump_Food_surf = pygame.image.load(random_pic).convert()
+		# 		self.flip()   ###doesnt work!!!!!!
+
+ 
+	def Event(self, event):
+		if event.type == QUIT:
+			self._running = False
+ 
+	def Update(self):
+		self.trump.update()
+ 
+		# does snake eat Trump_Food?
+		for i in range(0,self.trump.length):
+			if self.game.Colliding(self.Trump_Food.x,self.Trump_Food.y,self.trump.x[i], self.trump.y[i],40):
+				self.Trump_Food.x = randint(2,9) * 47
+				self.Trump_Food.y = randint(2,9) * 47
+				self.trump.length = self.trump.length + 1
+ 
+ 
+		# does snake collide with itself?
+		for i in range(2,self.trump.length):
+			if self.game.Colliding(self.trump.x[0],self.trump.y[0],self.trump.x[i], self.trump.y[i],40):
+				print("Game over. You collided with yourself!: ")
+				exit(0)
+ 
+		pass
  
