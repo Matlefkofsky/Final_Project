@@ -30,19 +30,20 @@ class Trump(pygame.sprite.Sprite):
 	y = [0]
 	multiplier = 47
 	direction = 0
+	global length
 	length = 3
 	NewCountMax = 2
 	NewCount = 0
  
 	def __init__(self, length):
-	   self.length = length
-	   for i in range(0,2000):
-		   self.x.append(-100)
-		   self.y.append(-100)
+	    self.length = length
+	    for x in range(0,5000):
+		    self.x.append(-100)
+		    self.y.append(-100)
  
 	   # initial positions
-	   self.x[1] = 1*47
-	   self.x[2] = 2*47
+	    self.x[1] = 1*47
+	    self.x[2] = 2*47
  
 	def update(self):
  
@@ -50,9 +51,9 @@ class Trump(pygame.sprite.Sprite):
 		if self.NewCount > self.NewCountMax:
  
 			# this is used to update previous positions
-			for i in range(self.length-1,0,-1):
-				self.x[i] = self.x[i-1]
-				self.y[i] = self.y[i-1]
+			for x in range(self.length-1,0,-1):
+				self.x[x] = self.x[x-1]
+				self.y[x] = self.y[x-1]
  
 			# these lines of code update the position of the head of the snake (the first Donald)
 			if self.direction == 0:
@@ -67,16 +68,16 @@ class Trump(pygame.sprite.Sprite):
 			self.NewCount = 0
  
  
-	def moveRight(self):
+	def goR(self):
 		self.direction = 0
  
-	def moveLeft(self):
+	def goL(self):
 		self.direction = 1
  
-	def moveUp(self):
+	def goU(self):
 		self.direction = 2
  
-	def moveDown(self):
+	def goD(self):
 		self.direction = 3 
  
 	def draw(self, surface, image):
@@ -84,9 +85,9 @@ class Trump(pygame.sprite.Sprite):
 			surface.blit(image,(self.x[i],self.y[i])) 
  
 class Game:
-	def Colliding(self,x1,y1,x2,y2,bsize):
-		if x1 >= x2 and x1 <= x2 + bsize:
-			if y1 >= y2 and y1 <= y2 + bsize:
+	def Colliding(self,x1,y1,x2,y2):
+		if x1 >= x2 and x1 <= x2:
+			if y1 >= y2 and y1 <= y2:
 				return True
 		return False
  
@@ -117,11 +118,9 @@ class App(pygame.sprite.Sprite):
 		lst_of_pics = ["hillary3.bmp","mexico.bmp"]
 		random_pic = random.choice(lst_of_pics)
 		self._Trump_Food_surf = pygame.image.load(random_pic).convert()
-		# for i in range(0,self.trump.length):
-		# 	if self.game.Colliding(self.Trump_Food.x,self.Trump_Food.y,self.trump.x[i], self.trump.y[i],40):
-		# 		self._Trump_Food_surf = pygame.image.load(random_pic).convert()
-		# 		self.flip()   ###doesnt work!!!!!!
 
+		global sound
+		sound = pygame.mixer.Sound("Best_of_Donald.wav")
  
 	def Event(self, event):
 		if event.type == QUIT:
@@ -132,16 +131,17 @@ class App(pygame.sprite.Sprite):
  
 		# does snake eat Trump_Food?
 		for i in range(0,self.trump.length):
-			if self.game.Colliding(self.Trump_Food.x,self.Trump_Food.y,self.trump.x[i], self.trump.y[i],40):
+			if self.game.Colliding(self.Trump_Food.x,self.Trump_Food.y,self.trump.x[i], self.trump.y[i]):
 				self.Trump_Food.x = randint(2,9) * 47
 				self.Trump_Food.y = randint(2,9) * 47
 				self.trump.length = self.trump.length + 1
+				# print (self.trump.length)
  
  
 		# does snake collide with itself?
 		for i in range(2,self.trump.length):
-			if self.game.Colliding(self.trump.x[0],self.trump.y[0],self.trump.x[i], self.trump.y[i],40):
-				print("Game over. You collided with yourself!: ")
+			if self.game.Colliding(self.trump.x[0],self.trump.y[0],self.trump.x[i], self.trump.y[i]):
+				print("Game over. You collided with yourself! Your score was ", (self.trump.length))
 				exit(0)
  
 		pass
@@ -158,5 +158,34 @@ class App(pygame.sprite.Sprite):
 	def running(self):
 		if self.Begin() == False:
 			self._running = False
- 
 
+		while (self._running):
+			sound.play()
+			pygame.event.pump()
+			keys = pygame.key.get_pressed() 
+			for event in pygame.event.get():
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_LEFT:
+						self.trump.goL()
+					if event.key == pygame.K_RIGHT:
+						self.trump.goR()
+					if event.key == pygame.K_UP:
+						self.trump.goU()
+					if event.key == pygame.K_DOWN:
+						self.trump.goD()
+					if event.key == pygame.K_ESCAPE:
+						self._running = False
+						print ("You quit out of the game! Your score was ", self.trump.length)
+				if event.type == pygame.QUIT:
+					self._running = False
+					print ("You quit out of the game! Your score was ", self.trump.length)
+ 
+			self.Update()
+			self.Create()
+ 
+			time.sleep (50.0 / 1000.0);
+		self.quit()
+ 
+if __name__ == "__main__" :
+	theApp = App()
+	theApp.running()
