@@ -3,6 +3,14 @@ from random import randint
 import pygame
 import time
 import random
+
+"""A:  Create a variation of PacMan, Breakout, Asteroids.    You can create a game of your choice, but it must include movement, collision detection, scoring and/or time, and animation. All games should include sound. Base score is 100/150 pts for a working game.
+
+B: Show at least two consistent weeks of commits (at least 10 different days, more than 5 hours apart) 10pts
+
+C: Demonstrate a unique implementation of Class Inheritance 10pts
+
+D: Final 30 points are on a curved scale.  The class will rank the best games in the class."""
  
 class Trump_Food(pygame.sprite.Sprite):
 	x = 0
@@ -138,3 +146,17 @@ class App(pygame.sprite.Sprite):
  
 		pass
  
+	def Create(self):
+		self._display_surf.fill((0,0,0))
+		self.trump.draw(self._display_surf, self._image_surf)
+		self.Trump_Food.draw(self._display_surf, self._Trump_Food_surf)
+		pygame.display.flip()
+ 
+	def quit(self):
+		pygame.quit()
+ 
+	def running(self):
+		if self.Begin() == False:
+			self._running = False
+ 
+
