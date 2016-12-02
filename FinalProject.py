@@ -107,7 +107,7 @@ class App(pygame.sprite.Sprite): #class acts as main function initializing the g
 		self._image_surf = pygame.image.load("Media/Trump.bmp").convert() #loads the trump image for the snake
 
 		#this code creates a list of images that it will randomly select one of to be the snake food for trump to eat
-		lst_of_pics = ["Media/hillary3.bmp","Media/mexico.bmp"]
+		lst_of_pics = ["Media/hillary3.bmp","Media/mexico.bmp", "Media/Obama1.bmp"]
 		random_pic = random.choice(lst_of_pics)
 		self._Trump_Food_surf = pygame.image.load(random_pic).convert()
 
