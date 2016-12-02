@@ -5,7 +5,8 @@ import time
 import random
  
 Blue = (0, 0, 255)
- 
+StrDifficulty = input("* Enter a number 1-3 for difficulty...1 being the slowest and 3 the highest *")
+Difficulty = int(StrDifficulty)
 class Trump(pygame.sprite.Sprite): #class for snake 
 	x = [0]
 	y = [0]
@@ -24,7 +25,7 @@ class Trump(pygame.sprite.Sprite): #class for snake
 
 	def update(self):
  
-		self.NewCount = self.NewCount + 1
+		self.NewCount = self.NewCount + Difficulty #speed
 		if self.NewCount > self.NewCountMax:
  
 			# this is used to update previous positions
@@ -133,8 +134,9 @@ class App(pygame.sprite.Sprite): #class acts as main function initializing the g
 		# does snake collide with itself?
 		for i in range(2,self.trump.length):
 			if self.game.Colliding(self.trump.x[0],self.trump.y[0],self.trump.x[i], self.trump.y[i]): #recognizes collision with self
+				self._running = False
 				print("Game over. You collided with yourself! Your score was ", (self.trump.length))
-				exit(0) #exits game and prints the length of the snake as the score of the game
+				 #exits game and prints the length of the snake as the score of the game
  
 		pass
  
