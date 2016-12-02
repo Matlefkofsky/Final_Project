@@ -104,15 +104,15 @@ class App(pygame.sprite.Sprite): #class acts as main function initializing the g
 
 		pygame.display.set_caption('Trump Game') #sets the caption
 		self._running = True
-		self._image_surf = pygame.image.load("Trump.bmp").convert() #loads the trump image for the snake
+		self._image_surf = pygame.image.load("Media/Trump.bmp").convert() #loads the trump image for the snake
 
 		#this code creates a list of images that it will randomly select one of to be the snake food for trump to eat
-		lst_of_pics = ["hillary3.bmp","mexico.bmp"]
+		lst_of_pics = ["Media/hillary3.bmp","Media/mexico.bmp"]
 		random_pic = random.choice(lst_of_pics)
 		self._Trump_Food_surf = pygame.image.load(random_pic).convert()
 
 		global sound
-		sound = pygame.mixer.Sound("Fired.wav") #imports soundtrack of Trump repeating "you're fired!"
+		sound = pygame.mixer.Sound("Media/Fired.wav") #imports soundtrack of Trump repeating "you're fired!"
  
 	def Event(self, event): #function to quit out of game
 		if event.type == QUIT:
