@@ -2,10 +2,12 @@ from pygame.locals import *
 from random import randint
 import pygame
 import time
+import math
 import random
  
-StrDifficulty = input("* Enter a number 1-3 for difficulty...1 being the slowest and 3 the highest *")
-Difficulty = int(StrDifficulty) #Asks player to choose difficulty before game begins
+StrDifficulty = input("* Enter a number 1-3 for difficulty...1 being the slowest and 3 the highest * ") #Asks player to choose difficulty before game begins
+Difficulty = int(StrDifficulty) 
+
 class Trump(pygame.sprite.Sprite): #class for snake 
 	x = [0]
 	y = [0]
@@ -32,7 +34,7 @@ class Trump(pygame.sprite.Sprite): #class for snake
 				self.x[x] = self.x[x-1] #x-1 makes it so it only takes 1 piece of food/imgage for trump to grow when he eats it
 				self.y[x] = self.y[x-1]
  
-			# these lines of code update the position of the head of the snake (the first Donald)
+			#these lines of code update the position of the head of the snake (the first Donald)
 			if self.direction == 0:
 				self.x[0] = self.x[0] + self.Size
 			if self.direction == 1:
@@ -88,11 +90,8 @@ class App(pygame.sprite.Sprite): #class acts as main function initializing the g
 	trump = 0
 	Trump_Food = 0
  
-	def __init__(self): #initilaizes the methods of self 
+	def __init__(self): 
 		self._running = True 
-		self._display_surf = None
-		self._image_surf = None
-		self._Trump_Food_surf = None
 		self.game = Game()
 		self.trump = Trump(3) #beginnging length of trump snake
 		self.Trump_Food = Trump_Food(1,1)
@@ -168,6 +167,7 @@ class App(pygame.sprite.Sprite): #class acts as main function initializing the g
 					self._running = False
 					print ("You quit out of the game! Your score was ", self.trump.length)
 						#if red x button then quit program and print score
+
 
 			self.Update() #calls update and create throughout the course of the game to make sure it runs smoothly
 			self.Create()
